@@ -108,19 +108,20 @@ class UIButton extends UIInteractive {
             if (mousePressed) {
                 this.state = UISTATES.PRESS;
             } else {
-                if (this.state == UISTATES.RELEASE || this.state == UISTATES.IDLE) {
+                if (this.state == UISTATES.IDLE) {
                     this.state = UISTATES.HOVER;
                 }
                 if (this.state == UISTATES.PRESS) {
-                    this.state = UISTATES.RELEASE;
+                    this.OnRelease();
+                    this.state = UISTATES.HOVER;
                 }
             }
         } else {
-            if (this.state == UISTATES.RELEASE || this.state == UISTATES.HOVER) {
+            if (this.state == UISTATES.HOVER) {
                 this.state = UISTATES.IDLE;
             }
             if (this.state == UISTATES.PRESS) {
-                this.state = UISTATES.RELEASE;
+                this.state = UISTATES.IDLE;
             }
         }
 
@@ -134,8 +135,6 @@ class UIButton extends UIInteractive {
             case UISTATES.PRESS:
                 this.OnPress();
                 break;
-            case UISTATES.RELEASE:
-                this.OnRelease();
             default:
                 return;
         }
