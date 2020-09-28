@@ -15,6 +15,29 @@ let gameState = 0;
 etc...
 */
 
+let mouse = {
+    x: 0,
+    y: 0,
+    isDown: false,
+    dragPosition: {
+        x: 0,
+        y: 0
+    }
+}
+document.onmousedown = () => {
+    mouse.isDown = true;
+    mouse.dragPosition.x = mouse.x;
+    mouse.dragPosition.y = mouse.y;
+}
+document.onmouseup = () => {
+    mouse.isDown = false;
+}
+document.onmousemove = (e) => {
+    mouse.x = e.clientX - canvas.getBoundingClientRect().x;
+    mouse.y = e.clientY - canvas.getBoundingClientRect().y;
+}
+
+
 function MainLoop() {
     switch (gameState) {
         case 0:
