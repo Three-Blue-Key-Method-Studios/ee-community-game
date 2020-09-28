@@ -4,6 +4,9 @@ canvas.width = window.innerWidth / 1.5;
 canvas.height = canvas.width / 2;
 let ctx = canvas.getContext("2d");
 
+let loads = 2;
+let load = 0;
+
 let gameState = 0;
 /*
 0 = Main Menu
@@ -26,4 +29,16 @@ function MainLoop() {
     }
     requestAnimationFrame(MainLoop)
 }
-window.onload = () => MainLoop();
+
+function LoadLoop() {
+    if (load != loads)
+        requestAnimationFrame(LoadLoop)
+    else {
+        Initialise();
+        MainLoop();
+    }
+}
+
+window.onload = () => {
+    LoadLoop();
+};
