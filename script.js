@@ -1,13 +1,14 @@
-let canvas = document.createElement("canvas");
-document.body.appendChild(canvas);
-canvas.width = window.innerWidth / 1.5;
-canvas.height = canvas.width / 1.75;
-let ctx = canvas.getContext("2d");
+let c = document.createElement("canvas");
+document.body.appendChild(c);
+c.width = window.innerWidth / 1.5;
+c.height = c.width / 1.75;
+let ctx = c.getContext("2d");
 
-let loads = 2;
+let loads = 3;
 let load = 0;
 
 let gameState = 0;
+let gameStateTarget = 0;
 /*
 0 = Main Menu
 1 = Ingame
@@ -33,8 +34,8 @@ document.onmouseup = () => {
     mouse.isDown = false;
 }
 document.onmousemove = (e) => {
-    mouse.x = e.clientX - canvas.getBoundingClientRect().x;
-    mouse.y = e.clientY - canvas.getBoundingClientRect().y;
+    mouse.x = e.clientX - c.getBoundingClientRect().x;
+    mouse.y = e.clientY - c.getBoundingClientRect().y;
 }
 let buttonType;
 let button;
@@ -42,7 +43,7 @@ let button;
 function Initialise() {
 
     //BLUE BUTTON
-    buttonType = new UICanvasButtonGraphic();
+    buttonType = new UIcButtonGraphic();
     buttonType.textSize = 30;
     buttonType.hasGradient = true;
     buttonType.stateColours[UISTATES.IDLE].colour = "#E6203E";
@@ -64,9 +65,12 @@ function Initialise() {
 
     buttonType.gradientSize = 100;
     //MENU BUTTONS
-    button = new UIButton(canvas.width / 2, canvas.height / 2 - 100, 500, 75, buttonType, true);
-    button2 = new UIButton(canvas.width / 2, canvas.height / 2, 500, 75, buttonType, true);
-    button3 = new UIButton(canvas.width / 2, canvas.height / 2 + 100, 500, 75, buttonType, true);
+    button = new UIButton(c.width / 2, c.height / 2 - 100, 500, 75, buttonType, true);
+    button.OnRelease = () => {
+        gameStateTarget = 1;
+    }
+    button2 = new UIButton(c.width / 2, c.height / 2, 500, 75, buttonType, true);
+    button3 = new UIButton(c.width / 2, c.height / 2 + 100, 500, 75, buttonType, true);
 }
 
 function MainLoop() {

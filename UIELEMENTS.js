@@ -24,7 +24,7 @@ class UIInteractive {
         return;
     }
 }
-class UICanvasButtonGraphic {
+class UIcButtonGraphic {
     constructor() {
         this.stateColours = { //colours for each state
             IDLE: {
@@ -60,13 +60,17 @@ class UICanvasButtonGraphic {
         this.borderSize = 5;
 
         this.roundedness = 0; //deal with that later tbh, just rectangles for now
+
+        this.offsetX = 0;
+        this.offsetY = 0;
     }
     Draw(x, y, width, height, state, text = "") {
         let drawState = state;
         if (drawState == UISTATES.RELEASE) {
             drawState = UISTATES.PRESS;
         }
-
+        x += this.offsetX;
+        y += this.offsetY;
         let colour = this.stateColours[drawState].colour;
         if (this.hasGradient) {
             let offset = {
@@ -139,7 +143,7 @@ class UIButton extends UIInteractive {
                 return;
         }
     }
-    Run(text = "", mouse) {
+    Draw(text = "") {
         let offsetX = 0;
         let offsetY = 0;
         if (this.isCentered) {
@@ -147,6 +151,9 @@ class UIButton extends UIInteractive {
             offsetY = this.height / 2;
         }
         this.graphic.Draw(this.x - offsetX, this.y - offsetY, this.width, this.height, this.state, text);
+    }
+    Run(text = "", mouse) {
+        this.Draw(text);
         this.RunMethods();
         this.CheckState(mouse.x, mouse.y, mouse.isDown);
     }
