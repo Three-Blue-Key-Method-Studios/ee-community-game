@@ -1,9 +1,18 @@
 let menuExitAnimationTimer = 0;
 let menuAnimationTimer = 0;
+let menuBackgroundTimer = 0;
+
+
 
 function MainMenu() {
-    ctx.clearRect(0, 0, c.width, c.height);
-
+    menuBackgroundTimer += 0.005;
+    let x = (Math.sin(menuBackgroundTimer * 2) * .5 + .5) * c.width;
+    let y = (Math.cos(menuBackgroundTimer * 2) * .5 + .5) * c.height;
+    let bgGradient = ctx.createLinearGradient(x, c.height - y, c.width - x, y);
+    bgGradient.addColorStop(0, "hsl(16, 100%, 64%)");
+    bgGradient.addColorStop(1, "hsl(35, 95%, 58%)");
+    ctx.fillStyle = bgGradient;
+    ctx.fillRect(0, 0, c.width, c.height);
     if (gameStateTarget == 1) {
         menuExitAnimationTimer++;
         let offset = (menuExitAnimationTimer * (menuExitAnimationTimer + 1) / 2);
